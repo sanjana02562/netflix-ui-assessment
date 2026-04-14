@@ -15,7 +15,7 @@ export default function Home() {
   const [selected, setSelected] = useState(null);
   const [online, setOnline] = useState(navigator.onLine);
 
-  // FETCH MOVIES (with memory leak prevention)
+
   useEffect(() => {
     let mounted = true;
 
@@ -24,7 +24,7 @@ export default function Home() {
             if (data && data.length > 0) {
             setMovies(data);
             } else {
-            // fallback dummy data
+            
             setMovies([
                 {
                 id: 1,
@@ -40,7 +40,6 @@ export default function Home() {
     return () => mounted = false;
   }, []);
 
-  // DEBOUNCE SEARCH
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebounced(query);
@@ -49,7 +48,6 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, [query]);
 
-  // ONLINE / OFFLINE
   useEffect(() => {
     const goOnline = () => setOnline(true);
     const goOffline = () => setOnline(false);
@@ -63,7 +61,6 @@ export default function Home() {
     };
   }, []);
 
-  // FILTER
   const filtered = movies.filter(m => {
   return (
     m.title?.toLowerCase().includes(debounced.toLowerCase()) ||
@@ -73,12 +70,11 @@ export default function Home() {
 }
   );
 
-  // LOAD MORE (lazy loading)
+
   const loadMore = () => {
     setVisible(prev => prev + 20);
   };
 
-  // WATCHLIST + HISTORY
   const addToWatchlist = (movie) => {
     const list = JSON.parse(localStorage.getItem("watchlist")) || [];
     localStorage.setItem("watchlist", JSON.stringify([...list, movie]));

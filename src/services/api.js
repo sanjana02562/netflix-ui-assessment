@@ -6,7 +6,6 @@ export const fetchMovies = async () => {
       "https://api.tvmaze.com/shows"
     );
 
-    // convert data to your format
     return res.data.map(item => ({
       id: item.id,
       title: item.name,
